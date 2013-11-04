@@ -188,7 +188,7 @@ public class DatabaseMeta {
 			}
 			DatabaseMetaData dbmd = connection.getMetaData();
 
-			ResultSet rsTables = dbmd.getTables(this.getCatalog(), this.getSchema(), null, types);
+			ResultSet rsTables = dbmd.getTables(null, null, null, types);
 			List<String> tables = new ArrayList<String>();
 			while (rsTables.next()) {
 				String table = rsTables.getString("TABLE_NAME");
