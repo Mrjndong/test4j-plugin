@@ -32,7 +32,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.jtester.jspec.ui.JSpecEditor;
 import org.jtester.plugin.helper.ColourManager;
-import org.jtester.spec.scenario.step.txt.LineType;
+import org.test4j.spec.scenario.step.txt.LineType;
 
 public class JSpecConfiguration extends SourceViewerConfiguration {
 	private ColourManager colourManager;

@@ -1,6 +1,6 @@
 package org.jtester.jspec;
 
-import static org.jtester.tools.commons.StringHelper.removeTheWhiteSpaces;
+import static org.test4j.tools.commons.StringHelper.removeTheWhiteSpaces;
 
 import java.util.Arrays;
 import java.util.HashSet;

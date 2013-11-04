@@ -16,9 +16,9 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.core.PackageFragmentRoot;
-import org.jtester.spec.annotations.Named;
-import org.jtester.spec.inner.StepType;
-import org.jtester.tools.commons.StringHelper;
+import org.test4j.spec.annotations.Named;
+import org.test4j.spec.inner.StepType;
+import org.test4j.tools.commons.StringHelper;
 
 @SuppressWarnings("restriction")
 public class StepMethodLocator {

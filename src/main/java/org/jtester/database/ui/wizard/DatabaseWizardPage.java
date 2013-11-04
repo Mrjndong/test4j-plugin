@@ -17,7 +17,7 @@ import org.jtester.database.meta.DatabaseType;
 import org.jtester.database.ui.DatabaseView;
 import org.jtester.database.ui.tree.DatabaseNode;
 import org.jtester.plugin.helper.PluginLogger;
-import org.jtester.tools.commons.StringHelper;
+import org.test4j.tools.commons.StringHelper;
 
 /**
  * 数据库链接参数设置页面

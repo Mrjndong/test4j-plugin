@@ -16,7 +16,7 @@ import org.jtester.plugin.helper.PluginHelper;
 import org.jtester.plugin.helper.PluginLogger;
 import org.jtester.plugin.resources.IconResources;
 import org.jtester.plugin.resources.PluginMessages;
-import org.jtester.tools.commons.StringHelper;
+import org.test4j.tools.commons.StringHelper;
 
 public class DBTableQueryMenu extends BaseMenuItem {
 

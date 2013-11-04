@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-	<!-- JTester Perspective -->
+	<!-- test4j Perspective -->
 	<extension point="org.eclipse.ui.perspectives">
 		<perspective name="jtester" icon="icons/database_icon.gif"
 			class="org.jtester.plugin.Perspective" id="org.jtester.ui.Perspective">
@@ -15,10 +15,6 @@
 	</extension>
 	<extension point="org.eclipse.core.runtime.preferences">
 		<initializer class="org.jtester.plugin.JTesterPreferenceInitializer"></initializer>
-	</extension>
-
-	<extension id="org.jtester.ui.wiki.filetypes" point="org.eclipse.team.core.fileTypes">
-		<fileTypes extension="wiki" type="text" />
 	</extension>
 
 	<extension point="org.eclipse.ui.commands">
@@ -161,9 +157,6 @@
 
 	<!--SQL Editor -->
 	<extension point="org.eclipse.ui.editors">
-		<editor id="org.jtester.wiki.ui.WikiBrowser" class="org.jtester.wiki.ui.WikiBrowser"
-			extensions="wiki" name="DbFit Editor" default="true" icon="icons/wiki.png">
-		</editor>
 		<editor id="org.jtester.database.ui.SQLEditor" class="org.jtester.database.ui.SQLEditor"
 			extensions="sql" name="SQL Editor" default="true" icon="icons/database_icon.gif"
 			contributorClass="org.jtester.database.assistor.SQLEditorContributor">

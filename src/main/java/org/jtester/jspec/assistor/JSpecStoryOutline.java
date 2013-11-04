@@ -22,7 +22,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
-import org.jtester.spec.scenario.step.txt.LineType;
+import org.test4j.spec.scenario.step.txt.LineType;
 
 public class JSpecStoryOutline extends ContentOutlinePage {
 	protected IEditorInput fInput;

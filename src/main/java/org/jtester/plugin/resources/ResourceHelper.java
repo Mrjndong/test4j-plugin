@@ -7,7 +7,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
 import org.jtester.plugin.helper.PluginLogger;
 import org.jtester.plugin.helper.PluginSetting;
-import org.jtester.tools.commons.StringHelper;
+import org.test4j.tools.commons.StringHelper;
 
 public class ResourceHelper {
 	public static void setExcludedProperty(IProject project, String value) throws CoreException {

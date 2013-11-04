@@ -13,8 +13,8 @@ import org.eclipse.jface.text.reconciler.IReconcilingStrategy;
 import org.eclipse.jface.text.reconciler.IReconcilingStrategyExtension;
 import org.eclipse.swt.widgets.Display;
 import org.jtester.jspec.ui.JSpecEditor;
-import org.jtester.spec.scenario.step.txt.LineType;
-import org.jtester.tools.commons.StringHelper;
+import org.test4j.spec.scenario.step.txt.LineType;
+import org.test4j.tools.commons.StringHelper;
 
 public class JSpecReconcilingStrategy implements IReconcilingStrategy, IReconcilingStrategyExtension {
 	private JSpecEditor editor;

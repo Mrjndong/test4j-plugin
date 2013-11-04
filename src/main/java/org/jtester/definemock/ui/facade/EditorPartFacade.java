@@ -24,7 +24,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.jtester.plugin.helper.PluginLogger;
 import org.jtester.testsequence.assistor.MethodSequence;
-import org.jtester.tools.commons.StringHelper;
+import org.test4j.tools.commons.StringHelper;
 
 /**
  * @author vera 25.01.2006 21:50:37 EditorPartFacade offers easy access to

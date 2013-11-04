@@ -16,8 +16,8 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
 import org.jtester.jspec.JSpecProp;
-import org.jtester.spec.inner.StepType;
-import org.jtester.spec.scenario.step.txt.LineType;
+import org.test4j.spec.inner.StepType;
+import org.test4j.spec.scenario.step.txt.LineType;
 
 public class StepMethodLink implements IHyperlink {
 	final IDocument document;

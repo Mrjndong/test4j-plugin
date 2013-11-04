@@ -1,14 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: jTester Plug-in
-Bundle-SymbolicName: org.jtester.plugin;singleton:=true
+Bundle-Name: Test4J Plug-in
+Bundle-SymbolicName: org.test4j.plugin;singleton:=true
 Bundle-Version: 0.3.6
 Bundle-ClassPath: bin/,
- lib/jtester.core-2.0.2.jar,
- lib/jtester.spec-2.0.2.jar,
+ lib/test4j.core-2.0.5.jar,
+ lib/test4j.spec-2.0.5.jar,
  lib/xstream-1.3.1.jar,
  lib/commons-lang-2.2.jar,
- lib/fitnesse-20090513.jar,
  lib/mysql-connector-5.1.6.jar,
  lib/velocity-1.7-dep.jar,
  lib/velocity-1.7.jar,
