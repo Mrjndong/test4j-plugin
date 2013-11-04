@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Test4J Plug-in
 Bundle-SymbolicName: org.test4j.plugin;singleton:=true
-Bundle-Version: 0.3.6
+Bundle-Version: 1.0.0
 Bundle-ClassPath: bin/,
  lib/test4j.core-2.0.5.jar,
  lib/test4j.spec-2.0.5.jar,
@@ -12,15 +12,15 @@ Bundle-ClassPath: bin/,
  lib/velocity-1.7-dep.jar,
  lib/velocity-1.7.jar,
  .
-Bundle-Activator: org.jtester.JTesterActivator
+Bundle-Activator: org.test4j.plugin.Test4JActivator
 Bundle-Vendor: davey.wu
 Bundle-Localization: plugin
-Export-Package: org.jtester,
- org.jtester.database.assistor,
- org.jtester.database.meta,
- org.jtester.database.ui.tree,
- org.jtester.plugin.helper,
- org.jtester.testsequence.assistor
+Export-Package: org.test4j.plugin,
+ org.test4j.plugin.database.assistor,
+ org.test4j.plugin.database.meta,
+ org.test4j.plugin.database.ui.tree,
+ org.test4j.plugin.helper,
+ org.test4j.plugin.testsequence.assistor
 Require-Bundle: org.eclipse.core.expressions;bundle-version="3.4.0",
  org.eclipse.core.filesystem;bundle-version="1.2.0",
  org.eclipse.core.runtime;bundle-version="3.5.0",
