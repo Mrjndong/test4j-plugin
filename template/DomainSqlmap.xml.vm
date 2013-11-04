@@ -1,0 +1,168 @@
+#set ($ignorePrefixs=["Cae"])
+#foreach($ignorePrefix in $ignorePrefixs)
+#if($model.javaName.startsWith($ignorePrefix))
+ #set ($modelJavaName = ${model.javaName.substring($ignorePrefix.length())} + "Entity")
+#else
+ #set ($modelJavaName = ${model.javaName}  + "Entity")  
+#end
+#end
+<?xml version="1.0" encoding="$encoding"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="${modelJavaName}">
+  <typeAlias alias="${modelJavaName}" type="com.ali.caesar.platform.foundation.entity.${modelJavaName}" />
+  <resultMap id="RM-${modelJavaName}" class="${modelJavaName}">
+	#foreach($column in $model.getChildrenList())
+	     #if ( $column.getClass().getSimpleName() == "ColumnNode" )
+     	 <result property="$column.javaName" column="$column.name"  />
+	     #end
+	#end
+   </resultMap>
+
+  <sql id="COMMON_CONDITION">
+	#foreach($column in $model.getChildrenList())
+	   #if ( $column.getClass().getSimpleName() == "ColumnNode" )
+        <!-- 直接传入参数，即判断是否相等 -->
+        <isNotEmpty property="$column.javaName" prepend="and">
+            $column.name = #$column.javaName#
+        </isNotEmpty>
+        	
+        <!-- 时间需要支持两个参数的上下限查询 -->
+	     #if ( $column.getColumnMeta().getTypeName() == "DATE" )
+	    <isNotEmpty prepend="and" property="${column.javaName}Min">
+	    	<![CDATA[$column.name >= #${column.javaName}Min# ]]>
+	    </isNotEmpty>        
+	    <isNotEmpty prepend="and" property="${column.javaName}Max">
+	    	<![CDATA[$column.name <= #${column.javaName}Max#]]>
+	    </isNotEmpty>	     
+	     #end
+
+         <!-- 同个参数传入Array值，表示in运算 -->
+         #if ( $column.getColumnMeta().getDecimalDigits() == 0 )
+            <isNotEmpty property="${column.javaName}Array" prepend="and">
+            $column.name in 
+              <iterate property="${column.javaName}Array" open="(" close=")" conjunction=",">
+              #${column.javaName}Array[]# 
+              </iterate>
+            </isNotEmpty>
+         #end
+       #end
+	#end
+	<!-- 特殊查询条件，如模糊查询，请追加在此处 -->
+
+	<!-- 通用的排序条件支持  -->
+    <isNotEmpty property="sortFields" prepend=" ">
+		<![CDATA[
+			order by $sortFields$
+		 ]]>
+    </isNotEmpty>  
+  </sql>
+  
+  <insert id="INSERT_POJO" parameterClass="${modelJavaName}">
+      <selectKey resultClass="int" keyProperty="id">
+            <![CDATA[
+                SELECT SEQ_${model.name}.NEXTVAL AS ID FROM DUAL
+            ]]>
+       </selectKey>    
+    <![CDATA[INSERT INTO ${model.name}(ID]]>
+    <dynamic>
+	#foreach($column in $model.getChildrenList())
+	   #if ( $column.getClass().getSimpleName() == "ColumnNode" )
+	     #if ( $column.name != "ID" )
+       	  <isNotEmpty property="$column.javaName" prepend="," ><![CDATA[$column.name]]></isNotEmpty>
+	     #end
+	   #end
+	#end    
+    </dynamic>
+	<![CDATA[) VALUES ( #id#]]>
+    <dynamic>
+	#foreach($column in $model.getChildrenList())
+	   #if ( $column.getClass().getSimpleName() == "ColumnNode" )
+	     #if ( $column.name != "ID" )
+       	  <isNotEmpty property="$column.javaName" prepend="," ><![CDATA[#$column.javaName#]]></isNotEmpty>
+	     #end
+	   #end
+	#end     
+    </dynamic>
+    <![CDATA[)]]>
+  </insert>  
+  
+  <update id="UPDATE_POJO" parameterClass="map">
+		<![CDATA[UPDATE ${model.name} SET GMT_MODIFIED = SYSDATE]]>
+		<dynamic>
+	#foreach($column in $model.getChildrenList())
+	   #if ( $column.getClass().getSimpleName() == "ColumnNode" )
+	     #if ( $column.name != "ID" && $column.name != "GMT_MODIFIED")
+			<isEqual property="${column.javaName}Changed" prepend="," compareValue="true"><![CDATA[${column.name} = #${column.javaName}#]]></isEqual>
+	     #end
+	   #end
+	#end		
+		</dynamic>	
+		<![CDATA[ where ID = #id#]]>
+  </update>  
+  
+
+  
+  <delete id="DELETE_POJO" parameterClass="map">
+		<![CDATA[
+			UPDATE ${model.name} SET IS_DELETED = 'y',GMT_MODIFIED = SYSDATE WHERE
+	    ]]>
+	    <!-- 根据ID或者ID集合进行删除 -->
+		<isNotEmpty property="id">
+			<![CDATA[ ID = #id# ]]>
+        </isNotEmpty>
+		<isNotEmpty property="idArray">
+			 ID in
+			<iterate property="idArray" open="(" close=")" conjunction=",">
+				#idArray[]#
+            </iterate>
+		</isNotEmpty>
+	    <!-- 特殊删除条件，请追加在此处 -->
+  </delete>
+  
+    
+
+  <sql id="COMMON_SELECT">
+        <![CDATA[
+            SELECT
+                ID
+	#foreach($column in $model.getChildrenList())
+	   #if ( $column.getClass().getSimpleName() == "ColumnNode" )
+	       #if ( $column.name != "ID" )
+                ,$column.name
+	       #end
+	   #end
+	#end        
+            FROM $model.name
+
+        ]]>
+  </sql>
+
+        
+  <select id="SELECT_POJO" resultMap="RM-${modelJavaName}" parameterClass="map">
+  	    <include refid="ALICRM_COMMON.ALI_PAGING_START" />
+        <include refid="COMMON_SELECT"/>
+        <![CDATA[ where IS_DELETED = 'n']]>
+		<include refid="COMMON_CONDITION"/>
+		<include refid="ALICRM_COMMON.ALI_PAGING_END" />
+  </select>
+
+  <!-- 如果是单主键应该实现SELECT_BY_ID的sqlmap，如果是复合主键应该实现SELECT_BY_PK的sqlmap -->
+  <select id="SELECT_BY_PK" resultMap="RM-${modelJavaName}" parameterClass="map">
+        <include refid="COMMON_SELECT"/>
+		<![CDATA[ where ID = #id# and IS_DELETED = 'n']]>
+  </select>
+  
+  <select id="SELECT_BY_ID" resultMap="RM-${modelJavaName}" parameterClass="map">
+        <include refid="COMMON_SELECT"/>
+        <![CDATA[ where ID = #id# and IS_DELETED = 'n']]>
+  </select>    
+
+ <!-- 获得符合结果数量 --> 
+  <select id="SELECT_COUNT" resultClass="int" parameterClass="map">
+         SELECT count(*) FROM $model.name 
+        <![CDATA[ where IS_DELETED = 'n']]>
+		<include refid="COMMON_CONDITION"/>
+  </select>
+  
+ 
+</sqlMap>

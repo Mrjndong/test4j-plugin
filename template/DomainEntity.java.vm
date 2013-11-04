@@ -1,0 +1,66 @@
+#set ($ignorePrefixs=["Cae"])
+#foreach($ignorePrefix in $ignorePrefixs)
+#if($model.javaName.startsWith($ignorePrefix))
+ #set ($modelJavaName = ${model.javaName.substring($ignorePrefix.length())} + "Entity")
+#else
+ #set ($modelJavaName = ${model.javaName}  + "Entity")  
+#end
+#end
+/*
+ * Copyright 2012 Alibaba.com All right reserved. This software is the
+ * confidential and proprietary information of Alibaba.com ("Confidential
+ * Information"). You shall not disclose such Confidential Information and shall
+ * use it only in accordance with the terms of the license agreement you entered
+ * into with Alibaba.com.
+ */
+package com.ali.caesar.platform.foundation.entity;
+
+import java.util.Date;
+
+/**
+ * $model.javaName Entity Definition
+ * @author ${user} ${date} ${time}
+ */
+public class ${modelJavaName} extends Entity {
+#set ($baseFields=["ID","GMT_CREATE","GMT_MODIFIED","CREATOR","MODIFIER","IS_DELETED"])
+#foreach($column in $model.getChildrenList())
+#if(!$baseFields.contains($column.name))
+    public static final String ${column.name} = "${column.javaName}";
+#end
+#end
+
+    /* (non-Javadoc)
+     * @see com.ali.caesar.platform.foundation.entity.Entity#isView()
+     */
+    @Override
+    public boolean isView() {
+        return false;
+    }
+    
+	#foreach($column in $model.getChildrenList())
+	     #if ( $column.getClass().getSimpleName() == "ColumnNode" && $column.javaName != "id" && $column.javaName != "gmtCreate" && $column.javaName != "gmtModified" && $column.javaName != "creator" && $column.javaName != "modifier" && $column.javaName != "isDeleted")
+
+	/**
+	 * ${column.getRemarks()}
+	 */
+    private $column.javaType  ${column.javaName};
+
+	     #end
+	#end
+
+	#foreach($column in $model.getChildrenList())
+	     #if ( $column.getClass().getSimpleName() == "ColumnNode" && $column.javaName != "id" && $column.javaName != "gmtCreate" && $column.javaName != "gmtModified" && $column.javaName != "creator" && $column.javaName != "modifier" && $column.javaName != "isDeleted")
+
+    public $column.javaType  ${column.getterName()}() {
+        return ${column.javaName};
+    }
+
+    public void ${column.setterName()}($column.javaType ${column.javaName}) {
+        firePropertyChange("${column.javaName}", this.${column.javaName} , ${column.javaName});
+        this.${column.javaName} = ${column.javaName};
+    }
+
+	     #end
+	#end
+
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Sample - CKEditor</title>
+	<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+	<link href="fitnesse.css" rel="stylesheet" type="text/css"/>
+	
+	<script type="text/javascript">
+	//<![CDATA[
+	var editor;
+
+	function changeEnter()
+	{
+		// If we already have an editor, let's destroy it first.
+		if ( editor )
+			editor.destroy( true );
+	
+		// Create the editor again, with the appropriate settings.
+		editor = CKEDITOR.replace( 'dbfit_editor',
+			{
+				toolbar : [ ['Source','-','Table','-','Cut','Copy','Paste','PasteText','PasteFromWord','-',
+					'Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat','-',
+					'Bold','Italic','Underline','Strike','-','Maximize' ] ],
+				language : 'zh-cn',
+				enterMode:2,
+				shiftEnterMode:2,
+				height : '600px',
+				width : '100%'
+			});
+	}
+	
+	window.onload = changeEnter;
+	
+	CKEDITOR.on('instanceReady',
+    function( evt )
+    {
+    	try{
+       var editor = evt.editor;
+       editor.execCommand('maximize');
+      }catch(e){
+      }
+  });
+	
+	setEditContent = function (content){
+		document.getElementById('dbfit_editor').value = content;  
+	}
+	
+	getEditContent = function(){
+		return editor.getData();
+	}
+	//]]>
+
+	</script>
+</head>
+<body>
+	<form>
+    <textarea cols="80" id="dbfit_editor" name="dbfit_editor" rows="10"></textarea>
+  	</form>
+</body>
+</html>

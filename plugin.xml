@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+	<!-- JTester Perspective -->
+	<extension point="org.eclipse.ui.perspectives">
+		<perspective name="jtester" icon="icons/database_icon.gif"
+			class="org.jtester.plugin.Perspective" id="org.jtester.ui.Perspective">
+		</perspective>
+	</extension>
+
+	<extension point="org.eclipse.ui.preferencePages">
+		<page class="org.jtester.plugin.JTesterPreferencePage" id="org.jtester.ui.JTesterPreferencePage"
+			name="JTester">
+		</page>
+	</extension>
+	<extension point="org.eclipse.core.runtime.preferences">
+		<initializer class="org.jtester.plugin.JTesterPreferenceInitializer"></initializer>
+	</extension>
+
+	<extension id="org.jtester.ui.wiki.filetypes" point="org.eclipse.team.core.fileTypes">
+		<fileTypes extension="wiki" type="text" />
+	</extension>
+
+	<extension point="org.eclipse.ui.commands">
+		<category id="org.jtester.commands" name="Jtester"
+			description="to save the debug expressions as xml data." />
+		<command id="org.jtester.savexp.ui.SaveExpressionHandler"
+			defaultHandler="org.jtester.savexp.ui.SaveExpressionHandler"
+			name="SaveExpression" categoryId="org.jtester.commands"
+			description="to save the debug expressions as xml data.">
+		</command>
+		<command id="org.jtester.database.handler.OpenViewHandler.OpenSqlEditorHandler"
+			defaultHandler="org.jtester.database.handler.OpenSqlEditorHandler"
+			name="New &amp;SQL Editor" categoryId="org.jtester.commands"
+			description="to open a new SQL editor view.">
+		</command>
+		<command id="org.jtester.database.handler.ExecuteSqlHandler"
+			defaultHandler="org.jtester.database.handler.ExecuteSqlHandler" name="Execute &amp;SQL"
+			categoryId="org.jtester.commands" description="to execute a sql statement.">
+		</command>
+		<command id="org.jtester.database.handler.OpenDatabaseViewHandler"
+			defaultHandler="org.jtester.database.handler.OpenViewHandler$OpenDatabaseViewHandler"
+			name="open database view" categoryId="org.jtester.commands"
+			description="to open a database connection view.">
+		</command>
+		<command id="org.jtester.database.handler.OpenResultViewHandler"
+			defaultHandler="org.jtester.database.handler.OpenViewHandler$OpenResultViewHandler"
+			name="Open ResultView" categoryId="org.jtester.commands" description="to open a database result view.">
+		</command>
+		<command id="org.jtester.plugin.handler.OpenMessageViewHandler"
+			defaultHandler="org.jtester.database.handler.OpenViewHandler$OpenMessageViewHandler"
+			name="Open MessageView" categoryId="org.jtester.commands"
+			description="to open a dababase message view.">
+		</command>
+		<command id="org.jtester.plugin.handler.ClearMessageHandler"
+			defaultHandler="org.jtester.plugin.handler.ClearMessageHandler" name="Clear MessageView"
+			categoryId="org.jtester.commands" description="to clean message view.">
+		</command>
+
+		<command id="org.jtester.definemock.handler.DefineMockMethodHandler" defaultHandler="org.jtester.definemock.handler.DefineMockMethodHandler"
+			name="Define Mock Method" categoryId="org.jtester.commands"
+			description="to generate Mockit.MockUP method.">
+		</command>
+		<command id="testsequence.open.handler" description="to open runned sequence of test method."
+			defaultHandler="org.jtester.testsequence.handler.TestSequenceOpenHandler"
+			name="Open Test Sequence" categoryId="org.jtester.commands">
+		</command>
+		<command id="testsequence.compare.handler" description="to compare two sequence of test method."
+			defaultHandler="org.jtester.testsequence.handler.TestSequenceCompareHandler"
+			name="Compare Test Sequence" categoryId="org.jtester.commands">
+		</command>
+		
+		<command id="org.jtester.jspec.handler.MarkCollapsedHandler" description="collapse folder."
+			defaultHandler="org.jtester.jspec.handler.MarkCollapsedHandler"
+			name="collapse folder" categoryId="org.jtester.commands">
+		</command>
+		<command id="org.jtester.jspec.handler.MarkExpandedHandler" description="expanded folder."
+			defaultHandler="org.jtester.jspec.handler.MarkExpandedHandler"
+			name="expanded folder" categoryId="org.jtester.commands">
+		</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			locationURI="popup:org.eclipse.debug.ui.ExpressionView?after=additions">
+			<command commandId="org.jtester.savexp.ui.SaveExpressionHandler"
+				icon="icons/save.gif" />
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:org.eclipse.debug.ui.VariableView?after=additions">
+			<command commandId="org.jtester.savexp.ui.SaveExpressionHandler"
+				icon="icons/save.gif" />
+		</menuContribution>
+
+		<menuContribution locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+			<menu id="org.jtester.main.menu" label="jTester">
+				<command commandId="org.jtester.database.handler.OpenViewHandler.OpenSqlEditorHandler"
+					label="Open New Sql Editor" icon="icons/sqleditor.gif" />
+				<separator name="separator1" visible="true" />
+				<command commandId="org.jtester.database.handler.ExecuteSqlHandler"
+					label="Run Sql" icon="icons/execute_icon.gif" />
+				<separator name="separator2" visible="true" />
+				<command commandId="org.jtester.database.handler.OpenDatabaseViewHandler"
+					label="Open Database View" icon="icons/connected_icon.gif" />
+				<command commandId="org.jtester.database.handler.OpenResultViewHandler"
+					label="Open Result View" icon="icons/table_icon.gif" />
+				<command commandId="org.jtester.plugin.handler.OpenMessageViewHandler"
+					label="Open Message View" icon="icons/view_icon.gif" />
+			</menu>
+		</menuContribution>
+
+		<menuContribution
+			locationURI="popup:org.jtester.database.ui.MessageView?before=edit">
+			<command commandId="org.jtester.plugin.handler.ClearMessageHandler"
+				label="clean messages" style="push" />
+		</menuContribution>
+		<menuContribution
+			locationURI="toolbar:org.jtester.database.ui.MessageView?before=edit">
+			<command commandId="org.jtester.plugin.handler.ClearMessageHandler"
+				icon="icons/remove_icon.gif" />
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:#org.jtester.database.ui.SQLEditor?before=edit">
+			<command commandId="org.jtester.database.handler.ExecuteSqlHandler"
+				label="Run SQL" icon="icons/execute_icon.gif" />
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:#org.jtester.jspec.ui.JSpecEditor?before=jspec">
+			<command commandId="org.jtester.jspec.handler.MarkCollapsedHandler"
+				label="%folder.collapse" icon="icons/folder_collapse.png" />
+		</menuContribution>
+		<menuContribution
+			locationURI="popup:#org.jtester.jspec.ui.JSpecEditor?before=jspec">
+			<command commandId="org.jtester.jspec.handler.MarkExpandedHandler"
+				label="%folder.expanded" icon="icons/folder_expanded.png" />
+		</menuContribution>
+		
+		<menuContribution locationURI="popup:#CompilationUnitEditorContext?after=additions">
+			<menu id="org.jtester.ui.editor.menu" label="jTester" icon="icons/test_method_info.png">
+				<separator name="top" />
+				<command commandId="org.jtester.definemock.handler.DefineMockMethodHandler"
+					label="New MockUp Method" icon="icons/mock_method_add.png" />
+				<command commandId="testsequence.open.handler" label="Open Test Sequence" icon="icons/test_sequence_open.png" />
+				<command commandId="testsequence.compare.handler" label="Compare Test Sequence" icon="icons/test_sequence_compare.png" />
+				<separator name="group2" />
+			</menu>
+		</menuContribution>
+	</extension>
+
+	<!--SQL Views -->
+	<extension point="org.eclipse.ui.views">
+		<category name="jTester" id="org.jtester.plugin.views" />
+		<view id="org.jtester.database.ui.DatabaseView" class="org.jtester.database.ui.DatabaseView"
+			name="Connections" category="org.jtester.plugin.views" icon="icons/selected_connected_icon.gif" />
+		<view id="org.jtester.database.ui.DataSetView" class="org.jtester.database.ui.DataSetView"
+			name="Results" category="org.jtester.plugin.views" icon="icons/table_icon.gif" />
+		<view id="org.jtester.database.ui.MessageView" class="org.jtester.database.ui.MessageView"
+			name="Messages" category="org.jtester.plugin.views" icon="icons/column_icon.gif" />
+		<view id="org.jtester.testsequence.ui.CompareBrowser" class="org.jtester.testsequence.ui.CompareBrowser"
+			name="CompareSequence" category="org.jtester.plugin.views" icon="icons/column_icon.gif" />
+	</extension>
+
+	<!--SQL Editor -->
+	<extension point="org.eclipse.ui.editors">
+		<editor id="org.jtester.wiki.ui.WikiBrowser" class="org.jtester.wiki.ui.WikiBrowser"
+			extensions="wiki" name="DbFit Editor" default="true" icon="icons/wiki.png">
+		</editor>
+		<editor id="org.jtester.database.ui.SQLEditor" class="org.jtester.database.ui.SQLEditor"
+			extensions="sql" name="SQL Editor" default="true" icon="icons/database_icon.gif"
+			contributorClass="org.jtester.database.assistor.SQLEditorContributor">
+		</editor>
+		<editor id="org.jtester.jspec.ui.StoryEditor" class="org.jtester.jspec.ui.JSpecBrowser"
+			extensions="story" name="JSpec Editor" icon="icons/story.png"
+			contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor">
+		</editor>
+		<editor id="org.jtester.jspec.ui.ScenarioEditor" class="org.jtester.jspec.ui.JSpecEditor"
+			extensions="scenario" name="JSpec Editor" icon="icons/scenario.png"
+			contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor">
+		</editor>
+	</extension>
+</plugin>
