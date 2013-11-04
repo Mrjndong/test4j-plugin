@@ -22,6 +22,7 @@ public class DefineMockMethodHandler extends AbstractHandler {
 		EditorPartFacade facade = new EditorPartFacade(editorPart);
 		try {
 			IType type = facade.getFirstNonAnonymousMethodSurroundingCursorPosition();
+			System.out.println(type);
 			return null;
 		} catch (Exception e) {
 			PluginLogger.log(e.getMessage(), 1);

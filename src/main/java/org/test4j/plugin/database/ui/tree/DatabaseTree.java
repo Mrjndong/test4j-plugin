@@ -162,6 +162,7 @@ public class DatabaseTree extends TreeViewer {
                         menuMgr.add(MenuFactory.generateDomainEntity(viewSite));
                         break;
                     case Column:
+                    default:
                         menuMgr.add(MenuFactory.query(viewSite));
                         break;
                 }

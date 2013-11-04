@@ -115,7 +115,7 @@ public class EditorPartFacade {
 			}
 			List<String> mockTypes = this.getClazzType(type, parameterTypeName);
 
-			System.out.println();
+			System.out.println(mockTypes);
 
 			ITypeHierarchy typeHierarchy = type.newTypeHierarchy(progressMonitor);
 
@@ -125,7 +125,7 @@ public class EditorPartFacade {
 			ITypeParameter param = params[0];
 			String name = param.getElementName();
 
-			System.out.println();
+			System.out.println(name);
 		} catch (JavaModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
