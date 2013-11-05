@@ -25,224 +25,225 @@ import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.test4j.spec.scenario.step.txt.LineType;
 
 public class JSpecStoryOutline extends ContentOutlinePage {
-	protected IEditorInput fInput;
-	protected IDocumentProvider fDocumentProvider;
-	protected ITextEditor fTextEditor;
 
-	public JSpecStoryOutline(IDocumentProvider provider, ITextEditor editor) {
-		this.fDocumentProvider = provider;
-		this.fTextEditor = editor;
-	}
+    protected IEditorInput      fInput;
+    protected IDocumentProvider fDocumentProvider;
+    protected ITextEditor       fTextEditor;
 
-	public void createControl(Composite parent) {
-		super.createControl(parent);
+    public JSpecStoryOutline(IDocumentProvider provider, ITextEditor editor) {
+        this.fDocumentProvider = provider;
+        this.fTextEditor = editor;
+    }
 
-		TreeViewer viewer = getTreeViewer();
-		viewer.setContentProvider(new JSpecOutlineContentProvider());
-		viewer.setLabelProvider(new LabelProvider());
-		viewer.addSelectionChangedListener(this);
-		viewer.setInput(this.fInput);
-	}
+    public void createControl(Composite parent) {
+        super.createControl(parent);
 
-	public void setInput(IEditorInput input) {
-		this.fInput = input;
-	}
+        TreeViewer viewer = getTreeViewer();
+        viewer.setContentProvider(new JSpecOutlineContentProvider());
+        viewer.setLabelProvider(new LabelProvider());
+        viewer.addSelectionChangedListener(this);
+        viewer.setInput(this.fInput);
+    }
 
-	public void selectionChanged(SelectionChangedEvent event) {
-		super.selectionChanged(event);
+    public void setInput(IEditorInput input) {
+        this.fInput = input;
+    }
 
-		ISelection selection = event.getSelection();
-		if (selection.isEmpty()) {
-			this.fTextEditor.resetHighlightRange();
-		} else {
-			Segment segment = (Segment) ((IStructuredSelection) selection).getFirstElement();
-			int start = segment.position.getOffset();
-			int length = segment.position.getLength();
-			try {
-				this.fTextEditor.setHighlightRange(start, length, true);
-			} catch (IllegalArgumentException localIllegalArgumentException) {
-				this.fTextEditor.resetHighlightRange();
-			}
-		}
-	}
+    public void selectionChanged(SelectionChangedEvent event) {
+        super.selectionChanged(event);
 
-	public void updateOutline() {
-		if (this.fInput == null) {
-			return;
-		}
-		TreeViewer viewer = getTreeViewer();
-		if (viewer == null) {
-			return;
-		}
-		Control control = viewer.getControl();
-		if (control == null || control.isDisposed()) {
-			return;
-		} else {
-			control.setRedraw(false);
-			viewer.setInput(this.fInput);
-			viewer.expandAll();
-			control.setRedraw(true);
-		}
-	}
+        ISelection selection = event.getSelection();
+        if (selection.isEmpty()) {
+            this.fTextEditor.resetHighlightRange();
+        } else {
+            Segment segment = (Segment) ((IStructuredSelection) selection).getFirstElement();
+            int start = segment.position.getOffset();
+            int length = segment.position.getLength();
+            try {
+                this.fTextEditor.setHighlightRange(start, length, true);
+            } catch (IllegalArgumentException localIllegalArgumentException) {
+                this.fTextEditor.resetHighlightRange();
+            }
+        }
+    }
 
-	protected class JSpecOutlineContentProvider implements ITreeContentProvider {
-		protected static final String SEGMENTS = "__java_segments";
-		protected IPositionUpdater fPositionUpdater = new DefaultPositionUpdater(SEGMENTS);
-		protected List<Segment> fContent = new ArrayList<Segment>(20);
+    public void updateOutline() {
+        if (this.fInput == null) {
+            return;
+        }
+        TreeViewer viewer = getTreeViewer();
+        if (viewer == null) {
+            return;
+        }
+        Control control = viewer.getControl();
+        if (control == null || control.isDisposed()) {
+            return;
+        } else {
+            control.setRedraw(false);
+            viewer.setInput(this.fInput);
+            viewer.expandAll();
+            control.setRedraw(true);
+        }
+    }
 
-		protected JSpecOutlineContentProvider() {
-		}
+    protected class JSpecOutlineContentProvider implements ITreeContentProvider {
+        protected static final String SEGMENTS         = "__java_segments";
+        protected IPositionUpdater    fPositionUpdater = new DefaultPositionUpdater(SEGMENTS);
+        protected List<Segment>       fContent         = new ArrayList<Segment>(20);
 
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-			if (oldInput != null) {
-				IDocument document = JSpecStoryOutline.this.fDocumentProvider.getDocument(oldInput);
-				if (document != null) {
-					try {
-						document.removePositionCategory(SEGMENTS);
-					} catch (BadPositionCategoryException localBadPositionCategoryException) {
-					}
-					document.removePositionUpdater(this.fPositionUpdater);
-				}
-			}
+        protected JSpecOutlineContentProvider() {
+        }
 
-			this.fContent.clear();
+        public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+            if (oldInput != null) {
+                IDocument document = JSpecStoryOutline.this.fDocumentProvider.getDocument(oldInput);
+                if (document != null) {
+                    try {
+                        document.removePositionCategory(SEGMENTS);
+                    } catch (BadPositionCategoryException localBadPositionCategoryException) {
+                    }
+                    document.removePositionUpdater(this.fPositionUpdater);
+                }
+            }
 
-			if (newInput != null) {
-				IDocument document = JSpecStoryOutline.this.fDocumentProvider.getDocument(newInput);
-				if (document != null) {
-					document.addPositionCategory(SEGMENTS);
-					document.addPositionUpdater(this.fPositionUpdater);
+            this.fContent.clear();
 
-					parseOutlineContent(document);
-				}
-			}
-		}
+            if (newInput != null) {
+                IDocument document = JSpecStoryOutline.this.fDocumentProvider.getDocument(newInput);
+                if (document != null) {
+                    document.addPositionCategory(SEGMENTS);
+                    document.addPositionUpdater(this.fPositionUpdater);
 
-		private void parseOutlineContent(IDocument document) {
-			int lines = document.getNumberOfLines();
+                    parseOutlineContent(document);
+                }
+            }
+        }
 
-			Segment scenario = null;
-			for (int index = 0; index < lines; index++) {
-				try {
-					int offset = document.getLineOffset(index);
-					int length = document.getLineLength(index);
+        private void parseOutlineContent(IDocument document) {
+            int lines = document.getNumberOfLines();
 
-					String line = document.get(offset, length);
-					LineType type = LineType.getLineType(line);
-					switch (type) {
-					case Scenario:
-					case SkipScenario:
-						if (scenario != null) {
-							this.fContent.add(scenario);
-						}
-						Position p1 = new Position(offset, length);
-						document.addPosition(SEGMENTS, p1);
-						scenario = new Segment(line, p1, null);
-						break;
-					case Given:
-					case SkipGiven:
-					case When:
-					case SkipWhen:
-					case Then:
-					case SkipThen:
-						Position p2 = new Position(offset, length);
-						document.addPosition(SEGMENTS, p2);
-						if (scenario == null) {
-							scenario = new Segment("Scenario default", p2, null);
-						}
-						scenario.addChild(new Segment(line, p2, scenario));
-						break;
-					default:
-					}
-				} catch (BadPositionCategoryException localBadPositionCategoryException) {
-				} catch (BadLocationException localBadLocationException) {
-				}
-			}
-			if (scenario != null) {
-				this.fContent.add(scenario);
-			}
-		}
+            Segment scenario = null;
+            for (int index = 0; index < lines; index++) {
+                try {
+                    int offset = document.getLineOffset(index);
+                    int length = document.getLineLength(index);
 
-		public void dispose() {
-			if (this.fContent != null) {
-				this.fContent.clear();
-				this.fContent = null;
-			}
-		}
+                    String line = document.get(offset, length);
+                    LineType type = LineType.getLineType(line);
+                    switch (type) {
+                        case Scenario:
+                        case SkipScenario:
+                            if (scenario != null) {
+                                this.fContent.add(scenario);
+                            }
+                            Position p1 = new Position(offset, length);
+                            document.addPosition(SEGMENTS, p1);
+                            scenario = new Segment(line, p1, null);
+                            break;
+                        case Given:
+                        case SkipGiven:
+                        case When:
+                        case SkipWhen:
+                        case Then:
+                        case SkipThen:
+                            Position p2 = new Position(offset, length);
+                            document.addPosition(SEGMENTS, p2);
+                            if (scenario == null) {
+                                scenario = new Segment("Scenario default", p2, null);
+                            }
+                            scenario.addChild(new Segment(line, p2, scenario));
+                            break;
+                        default:
+                    }
+                } catch (BadPositionCategoryException localBadPositionCategoryException) {
+                } catch (BadLocationException localBadLocationException) {
+                }
+            }
+            if (scenario != null) {
+                this.fContent.add(scenario);
+            }
+        }
 
-		public boolean isDeleted(Object element) {
-			return false;
-		}
+        public void dispose() {
+            if (this.fContent != null) {
+                this.fContent.clear();
+                this.fContent = null;
+            }
+        }
 
-		public Object[] getElements(Object element) {
-			return this.fContent.toArray();
-		}
+        public boolean isDeleted(Object element) {
+            return false;
+        }
 
-		public boolean hasChildren(Object element) {
-			if (element == JSpecStoryOutline.this.fInput) {
-				return true;
-			} else if (element instanceof Segment) {
-				return ((Segment) element).hasChild();
-			} else {
-				return false;
-			}
-		}
+        public Object[] getElements(Object element) {
+            return this.fContent.toArray();
+        }
 
-		public Object getParent(Object element) {
-			if ((element instanceof Segment)) {
-				Segment parent = ((Segment) element).getParent();
-				return parent == null ? JSpecStoryOutline.this.fInput : parent;
-			} else {
-				return null;
-			}
-		}
+        public boolean hasChildren(Object element) {
+            if (element == JSpecStoryOutline.this.fInput) {
+                return true;
+            } else if (element instanceof Segment) {
+                return ((Segment) element).hasChild();
+            } else {
+                return false;
+            }
+        }
 
-		public Object[] getChildren(Object element) {
-			if (element == JSpecStoryOutline.this.fInput) {
-				return this.fContent.toArray();
-			} else if (element instanceof Segment) {
-				List<Segment> children = ((Segment) element).getChildren();
-				return children == null ? new Object[0] : children.toArray();
-			} else {
-				return new Object[0];
-			}
-		}
-	}
+        public Object getParent(Object element) {
+            if ((element instanceof Segment)) {
+                Segment parent = ((Segment) element).getParent();
+                return parent == null ? JSpecStoryOutline.this.fInput : parent;
+            } else {
+                return null;
+            }
+        }
 
-	protected static class Segment {
-		public String name;
+        public Object[] getChildren(Object element) {
+            if (element == JSpecStoryOutline.this.fInput) {
+                return this.fContent.toArray();
+            } else if (element instanceof Segment) {
+                List<Segment> children = ((Segment) element).getChildren();
+                return children == null ? new Object[0] : children.toArray();
+            } else {
+                return new Object[0];
+            }
+        }
+    }
 
-		public Position position;
+    protected static class Segment {
+        public String         name;
 
-		private Segment parent;
+        public Position       position;
 
-		private List<Segment> children;
+        private Segment       parent;
 
-		public Segment(String name, Position position, Segment parent) {
-			this.name = name;
-			this.position = position;
-			this.parent = parent;
-			this.children = new ArrayList<Segment>();
-		}
+        private List<Segment> children;
 
-		public String toString() {
-			return this.name;
-		}
+        public Segment(String name, Position position, Segment parent) {
+            this.name = name;
+            this.position = position;
+            this.parent = parent;
+            this.children = new ArrayList<Segment>();
+        }
 
-		public void addChild(Segment segment) {
-			this.children.add(segment);
-		}
+        public String toString() {
+            return this.name;
+        }
 
-		public boolean hasChild() {
-			return this.children != null && this.children.size() > 0;
-		}
+        public void addChild(Segment segment) {
+            this.children.add(segment);
+        }
 
-		public List<Segment> getChildren() {
-			return this.children;
-		}
+        public boolean hasChild() {
+            return this.children != null && this.children.size() > 0;
+        }
 
-		public Segment getParent() {
-			return parent;
-		}
-	}
+        public List<Segment> getChildren() {
+            return this.children;
+        }
+
+        public Segment getParent() {
+            return parent;
+        }
+    }
 }

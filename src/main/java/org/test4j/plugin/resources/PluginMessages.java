@@ -81,6 +81,10 @@ public class PluginMessages extends NLS {
      */
     public static String        DATABASE_SELECT_AS_CHECK_DATA;
     /**
+     * 复制为JSON数据
+     */
+    public static String        DATABASE_SELECT_AS_JSON;
+    /**
      * 复制指定字段为插入数据
      */
     public static String        DATABASE_SELECT_FIELDS_AS_INSERT_DATA;
@@ -89,9 +93,9 @@ public class PluginMessages extends NLS {
      */
     public static String        DATABASE_SELECT_FIELDS_AS_CHECK_DATA;
     /**
-     * 将wiki转换为java代码
+     * 复制指定字段为JSON数据
      */
-    public static String        WIKI_CONVERT_TO_JAVA;
+    public static String        DATABASE_SELECT_FIELDS_AS_JSON;
 
     // ===following for ibatis
     /**
@@ -141,5 +145,4 @@ public class PluginMessages extends NLS {
     static {
         NLS.initializeMessages(BUNDLE_NAME, PluginMessages.class);
     }
-
 }

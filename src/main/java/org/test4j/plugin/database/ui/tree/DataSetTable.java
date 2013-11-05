@@ -27,227 +27,254 @@ import org.test4j.plugin.handler.MenuFactory;
 import org.test4j.plugin.helper.PluginHelper;
 
 public class DataSetTable extends TableViewer {
-	public static String MENU_ID = "#" + DataSetView.ID;
+    public static String    MENU_ID = "#" + DataSetView.ID;
 
-	private final IViewSite viewSite;
+    private final IViewSite viewSite;
 
-	private final Table table;
+    private final Table     table;
 
-	private List<String> columnNames;
+    private List<String>    columnNames;
 
-	public DataSetTable(final Composite parent, final IViewSite viewSite) {
-		super(parent, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
-		this.viewSite = viewSite;
-		this.table = this.getTable();
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
+    public DataSetTable(final Composite parent, final IViewSite viewSite) {
+        super(parent, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
+        this.viewSite = viewSite;
+        this.table = this.getTable();
+        table.setHeaderVisible(true);
+        table.setLinesVisible(true);
 
-		this.setLabelProvider(new DataSetLabelProvider());
-		this.setContentProvider(new ArrayContentProvider());
+        this.setLabelProvider(new DataSetLabelProvider());
+        this.setContentProvider(new ArrayContentProvider());
 
-		Menu menu = this.createContextMenu();
-		this.getControl().setMenu(menu);
-		this.table.addKeyListener(new KeyListener() {
-			public void keyPressed(KeyEvent e) {
-			}
+        Menu menu = this.createContextMenu();
+        this.getControl().setMenu(menu);
+        this.table.addKeyListener(new KeyListener() {
+            public void keyPressed(KeyEvent e) {
+            }
 
-			public void keyReleased(KeyEvent e) {
-				int curr = e.keyCode;
-				if ((curr == 'C' || curr == 'c') && e.stateMask == SWT.CTRL) {
-					String wiki = DataSetTable.this.copyAsDbFit();
-					PluginHelper.copyToClipBoard(wiki.toString());
-				}
-			}
-		});
-	}
+            public void keyReleased(KeyEvent e) {
+                int curr = e.keyCode;
+                if ((curr == 'C' || curr == 'c') && e.stateMask == SWT.CTRL) {
+                    String wiki = DataSetTable.this.copyAsDbFit();
+                    PluginHelper.copyToClipBoard(wiki.toString());
+                }
+            }
+        });
+    }
 
-	/**
-	 * 填充数据
-	 * 
-	 * @param header
-	 *            表格头
-	 * @param data
-	 *            具体数据
-	 */
-	public void fillData(List<String> columnNames, List<Map<String, String>> datas) {
-		this.table.clearAll();
-		TableColumn[] tableColumns = this.table.getColumns();
-		for (TableColumn tableColumn : tableColumns) {
-			tableColumn.dispose();
-		}
-		this.table.redraw();
+    /**
+     * 填充数据
+     * 
+     * @param header 表格头
+     * @param data 具体数据
+     */
+    public void fillData(List<String> columnNames, List<Map<String, String>> datas) {
+        this.table.clearAll();
+        TableColumn[] tableColumns = this.table.getColumns();
+        for (TableColumn tableColumn : tableColumns) {
+            tableColumn.dispose();
+        }
+        this.table.redraw();
 
-		this.columnNames = columnNames;
-		for (String name : columnNames) {
-			TableColumn tableColumn = new TableColumn(this.table, SWT.CENTER);
-			tableColumn.setText(name);
-			tableColumn.setWidth(100);
-		}
-		this.setInput(datas);
-	}
+        this.columnNames = columnNames;
+        for (String name : columnNames) {
+            TableColumn tableColumn = new TableColumn(this.table, SWT.CENTER);
+            tableColumn.setText(name);
+            tableColumn.setWidth(100);
+        }
+        this.setInput(datas);
+    }
 
-	/**
-	 * 创建上下文菜单
-	 * 
-	 * @return
-	 */
-	private Menu createContextMenu() {
-		MenuManager menuMgr = new MenuManager("Test4J Menu", MENU_ID);
-		this.viewSite.registerContextMenu(menuMgr, this);
+    /**
+     * 创建上下文菜单
+     * 
+     * @return
+     */
+    private Menu createContextMenu() {
+        MenuManager menuMgr = new MenuManager("Test4J Menu", MENU_ID);
+        this.viewSite.registerContextMenu(menuMgr, this);
 
-		menuMgr.setRemoveAllWhenShown(true);
-		menuMgr.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager menuMgr) {
-				if (DataSetTable.this.columnNames == null) {
-					return;
-				}
+        menuMgr.setRemoveAllWhenShown(true);
+        menuMgr.addMenuListener(new IMenuListener() {
+            public void menuAboutToShow(IMenuManager menuMgr) {
+                if (DataSetTable.this.columnNames == null) {
+                    return;
+                }
 
-				menuMgr.add(MenuFactory.refreshData(viewSite));
-				menuMgr.add(new Separator());
-				menuMgr.add(MenuFactory.copyAsInsertData(viewSite));
-				menuMgr.add(MenuFactory.copyAsQueryJava(viewSite));
-				menuMgr.add(new Separator());
-				menuMgr.add(MenuFactory.copySpecFieldsAsInsertJava(viewSite));
-				menuMgr.add(MenuFactory.copySpecFieldsAsQueryJava(viewSite));
-				// menuMgr.add(new Separator());
-				// menuMgr.add(MenuFactory.generateData(viewSite));
-			}
-		});
+                menuMgr.add(MenuFactory.refreshData(viewSite));
+                menuMgr.add(new Separator());
+                menuMgr.add(MenuFactory.copyAsInsertData(viewSite));
+                menuMgr.add(MenuFactory.copyAsQueryJava(viewSite));
+                menuMgr.add(MenuFactory.copyAsJson(viewSite));
+                menuMgr.add(new Separator());
+                menuMgr.add(MenuFactory.copySpecFieldsAsInsertJava(viewSite));
+                menuMgr.add(MenuFactory.copySpecFieldsAsQueryJava(viewSite));
+                menuMgr.add(MenuFactory.copySpecFieldsAsJson(viewSite));
+                // menuMgr.add(new Separator());
+                // menuMgr.add(MenuFactory.generateData(viewSite));
+            }
+        });
 
-		Menu menu = menuMgr.createContextMenu(this.getControl());
-		return menu;
-	}
+        Menu menu = menuMgr.createContextMenu(this.getControl());
+        return menu;
+    }
 
-	/**
-	 * 将表格中的数据复制为dbfit数据
-	 * 
-	 * @param table
-	 */
-	public String copyAsDbFit() {
-		return this.copyAsDbFit(this.columnNames);
-	}
+    /**
+     * 将表格中的数据复制为dbfit数据
+     * 
+     * @param table
+     */
+    public String copyAsDbFit() {
+        return this.copyAsDbFit(this.columnNames);
+    }
 
-	/**
-	 * 将表格中的数据复制为java的map代码
-	 * 
-	 * @return
-	 */
-	public String copyAsJavaMap() {
-		return this.copyAsJavaMap(this.columnNames);
-	}
+    /**
+     * 将表格中的数据复制为java的map代码
+     * 
+     * @return
+     */
+    public String copyAsJavaMap() {
+        return this.copyAsJavaMap(this.columnNames);
+    }
 
-	/**
-	 * 将表格中的数据复制为java的map代码
-	 * 
-	 * @param table
-	 */
-	public String copyAsJavaMap(List<String> columns) {
-		Map<String, String> datas = new LinkedHashMap<String, String>();
-		TableItem[] items = this.table.getSelection();
-		for (TableItem item : items) {
-			for (String column : columns) {
-				String text = this.getValueByColumnName(item, column, false);
-				String value = datas.get(column);
-				if (value == null) {
-					datas.put(column, "\"" + text + "\"");
-				} else {
-					datas.put(column, value + ", \"" + text + "\"");
-				}
-			}
-		}
+    /**
+     * 复制为json形式的数据
+     * 
+     * @return
+     */
+    public String copyAsJson(List<String> _columns) {
+        List<String> columns = _columns == null ? this.columnNames : _columns;
+        StringBuilder buff = new StringBuilder("[\n");
+        TableItem[] items = this.table.getSelection();
+        for (TableItem item : items) {
+            buff.append("\t{\n");
+            boolean isFirst = true;
+            for (String column : columns) {
+                if (isFirst) {
+                    isFirst = false;
+                } else {
+                    buff.append(",\n");
+                }
+                String text = this.getValueByColumnName(item, column, false);
+                buff.append("\t\t'").append(column).append("' : '").append(text).append("'");
+            }
+            buff.append("\n\t}\n");
+        }
+        buff.append("]");
+        return buff.toString();
+    }
 
-		StringBuffer map = new StringBuffer("new DataMap(){\n");
-		map.append("\t{\n");
-		for (String column : datas.keySet()) {
-			String value = datas.get(column);
-			map.append(String.format("\t\tthis.put(\"%s\", %s);\n", column, value));
-		}
-		map.append("\t}\n");
-		map.append("}");
+    /**
+     * 将表格中的数据复制为java的map代码
+     * 
+     * @param table
+     */
+    public String copyAsJavaMap(List<String> columns) {
+        Map<String, String> datas = new LinkedHashMap<String, String>();
+        TableItem[] items = this.table.getSelection();
+        for (TableItem item : items) {
+            for (String column : columns) {
+                String text = this.getValueByColumnName(item, column, false);
+                String value = datas.get(column);
+                if (value == null) {
+                    datas.put(column, "\"" + text + "\"");
+                } else {
+                    datas.put(column, value + ", \"" + text + "\"");
+                }
+            }
+        }
 
-		return map.toString();
-	}
+        StringBuffer map = new StringBuffer("new DataMap(){\n");
+        map.append("\t{\n");
+        for (String column : datas.keySet()) {
+            String value = datas.get(column);
+            map.append(String.format("\t\tthis.put(\"%s\", %s);\n", column, value));
+        }
+        map.append("\t}\n");
+        map.append("}");
 
-	/**
-	 * 表格中选中的行数
-	 * 
-	 * @return
-	 */
-	public int getSelectedRows() {
-		TableItem[] items = this.table.getSelection();
-		return items.length;
-	}
+        return map.toString();
+    }
 
-	/**
-	 * 将表格中的数据复制为dbfit数据
-	 * 
-	 * @param table
-	 */
-	public String copyAsDbFit(List<String> columns) {
-		StringBuffer wiki = new StringBuffer("|");
-		for (String column : columns) {
-			wiki.append(column);
-			wiki.append("|");
-		}
+    /**
+     * 表格中选中的行数
+     * 
+     * @return
+     */
+    public int getSelectedRows() {
+        TableItem[] items = this.table.getSelection();
+        return items.length;
+    }
 
-		TableItem[] items = this.table.getSelection();
-		for (TableItem item : items) {
-			wiki.append("\n|");
-			for (String column : columns) {
-				String text = this.getValueByColumnName(item, column, true);
-				wiki.append(text);
-				wiki.append("|");
-			}
-		}
-		return wiki.toString();
-	}
+    /**
+     * 将表格中的数据复制为dbfit数据
+     * 
+     * @param table
+     */
+    public String copyAsDbFit(List<String> columns) {
+        StringBuffer wiki = new StringBuffer("|");
+        for (String column : columns) {
+            wiki.append(column);
+            wiki.append("|");
+        }
 
-	public List<String> getColumnNames() {
-		return columnNames;
-	}
+        TableItem[] items = this.table.getSelection();
+        for (TableItem item : items) {
+            wiki.append("\n|");
+            for (String column : columns) {
+                String text = this.getValueByColumnName(item, column, true);
+                wiki.append(text);
+                wiki.append("|");
+            }
+        }
+        return wiki.toString();
+    }
 
-	/**
-	 * 根据列名称获取对应列的内容
-	 * 
-	 * @param item
-	 * @param columnName
-	 * @return
-	 */
-	private String getValueByColumnName(TableItem item, String columnName, boolean isWiki) {
-		int index = 0;
-		for (String column : this.columnNames) {
-			if (column.equals(columnName)) {
-				break;
-			}
-			index++;
-		}
-		if (index >= this.columnNames.size()) {
-			return "";
-		}
-		String text = item.getText(index);
-		if (isWiki && (text.contains("\n") || text.contains("\r"))) {
-			return "!-" + text + "-!";
-		} else {
-			return text;
-		}
-	}
+    public List<String> getColumnNames() {
+        return columnNames;
+    }
 
-	public class DataSetLabelProvider extends LabelProvider implements ITableLabelProvider {
+    /**
+     * 根据列名称获取对应列的内容
+     * 
+     * @param item
+     * @param columnName
+     * @return
+     */
+    private String getValueByColumnName(TableItem item, String columnName, boolean isWiki) {
+        int index = 0;
+        for (String column : this.columnNames) {
+            if (column.equals(columnName)) {
+                break;
+            }
+            index++;
+        }
+        if (index >= this.columnNames.size()) {
+            return "";
+        }
+        String text = item.getText(index);
+        if (isWiki && (text.contains("\n") || text.contains("\r"))) {
+            return "!-" + text + "-!";
+        } else {
+            return text;
+        }
+    }
 
-		public Image getColumnImage(Object element, int columnIndex) {
-			return null;
-		}
+    public class DataSetLabelProvider extends LabelProvider implements ITableLabelProvider {
 
-		@SuppressWarnings("unchecked")
-		public String getColumnText(Object element, int columnIndex) {
-			if (DataSetTable.this.columnNames == null) {
-				return "";
-			}
-			Map<String, String> map = (Map<String, String>) element;
+        public Image getColumnImage(Object element, int columnIndex) {
+            return null;
+        }
 
-			String key = DataSetTable.this.columnNames.get(columnIndex);
-			String data = map.get(key);
-			return data;
-		}
-	}
+        @SuppressWarnings("unchecked")
+        public String getColumnText(Object element, int columnIndex) {
+            if (DataSetTable.this.columnNames == null) {
+                return "";
+            }
+            Map<String, String> map = (Map<String, String>) element;
+
+            String key = DataSetTable.this.columnNames.get(columnIndex);
+            String data = map.get(key);
+            return data;
+        }
+    }
 }
