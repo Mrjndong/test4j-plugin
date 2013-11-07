@@ -8,6 +8,7 @@ import org.eclipse.jdt.debug.core.IJavaClassType;
 import org.eclipse.jdt.debug.core.IJavaInterfaceType;
 import org.eclipse.jdt.debug.core.IJavaValue;
 import org.test4j.plugin.savexp.xstream.converter.JsonConverter;
+import org.test4j.plugin.savexp.xstream.converter.base.DateConverter;
 import org.test4j.plugin.savexp.xstream.converter.base.NumberConverter;
 import org.test4j.plugin.savexp.xstream.converter.base.StringConverter;
 import org.test4j.plugin.savexp.xstream.converter.collections.MapConverter;
@@ -18,6 +19,7 @@ public class JSONHelper {
     static {
         converts.add(new StringConverter());
         converts.add(new NumberConverter());
+        converts.add(new DateConverter());
         converts.add(new MapConverter());
     }
 
