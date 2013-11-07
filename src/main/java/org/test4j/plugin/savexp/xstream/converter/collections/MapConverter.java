@@ -3,7 +3,9 @@ package org.test4j.plugin.savexp.xstream.converter.collections;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.eclipse.jdt.debug.core.IJavaValue;
@@ -39,6 +41,8 @@ public class MapConverter extends AbstractJsonConverter {
         types.add(Map.class.getName());
         types.add(AbstractMap.class.getName());
         types.add(HashMap.class.getName());
+        types.add(Hashtable.class.getName());
+        types.add(Properties.class.getName());
     }
 
     @Override
