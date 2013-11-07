@@ -14,6 +14,7 @@ import org.test4j.plugin.savexp.json.converter.DateConverter;
 import org.test4j.plugin.savexp.json.converter.EnumConverter;
 import org.test4j.plugin.savexp.json.converter.FileConverter;
 import org.test4j.plugin.savexp.json.converter.JavaClassConverter;
+import org.test4j.plugin.savexp.json.converter.JavaPrimitiveConverter;
 import org.test4j.plugin.savexp.json.converter.MapConverter;
 import org.test4j.plugin.savexp.json.converter.NumberConverter;
 import org.test4j.plugin.savexp.json.converter.PoJoConverter;
@@ -23,6 +24,7 @@ public class JSONHelper {
     final static List<JsonConverter> converts = new ArrayList<JsonConverter>();
 
     static {
+        converts.add(new JavaPrimitiveConverter());
         converts.add(new StringConverter());
         converts.add(new CharsetConverter());
         converts.add(new NumberConverter());
