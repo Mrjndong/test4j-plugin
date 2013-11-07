@@ -43,6 +43,7 @@ public class IconResources {
 	public static String COPY_ICON = "icons/copy.gif";
 	public static String COPY_INSERT_DATA = "icons/data_insert.gif";
 	public static String COPY_CHECK_DATA = "icons/data_check.gif";
+	public static String COPY_JSON_DATA = "icons/json.jpg";
 	public static String IMPORT_ICON = "icons/import.gif";
 	public static String EXPORT_ICON = "icons/export.gif";
 

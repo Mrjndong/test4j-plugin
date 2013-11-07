@@ -15,7 +15,7 @@ public class CopyAsJsonDataMenu extends BaseMenuItem {
 
     @Override
     protected void executeHandler(ExecutionEvent event) {
-        DataSetView.copyAsJavaMap(null, false);
+        DataSetView.copyAsJson(null);
     }
 
     @Override
@@ -25,6 +25,6 @@ public class CopyAsJsonDataMenu extends BaseMenuItem {
 
     @Override
     protected String getMenuIcon() {
-        return IconResources.COPY_CHECK_DATA;
+        return IconResources.COPY_JSON_DATA;
     }
 }

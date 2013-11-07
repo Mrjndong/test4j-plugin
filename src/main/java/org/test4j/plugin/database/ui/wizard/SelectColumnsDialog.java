@@ -17,53 +17,68 @@ import org.test4j.plugin.database.ui.DataSetView;
  * 选择数据列向导
  * 
  * @author darui.wudr
- * 
  */
 public class SelectColumnsDialog extends TitleAreaDialog {
 
-	private boolean isInsert;
+    private CopyAs                   copyAs;
 
-	private List<String> columns;
+    private List<String>             columns;
 
-	private List<BooleanFieldEditor> checks = new ArrayList<BooleanFieldEditor>();
+    private List<BooleanFieldEditor> checks = new ArrayList<BooleanFieldEditor>();
 
-	public SelectColumnsDialog(Shell parentShell, List<String> columns, boolean isInsert) {
-		super(parentShell);
-		super.setTitle("Select Columns Wizard");
-		this.columns = columns;
-		this.isInsert = isInsert;
-	}
+    public SelectColumnsDialog(Shell parentShell, List<String> columns, CopyAs copyAs) {
+        super(parentShell);
+        super.setTitle("Select Columns Wizard");
+        this.columns = columns;
+        this.copyAs = copyAs;
+    }
 
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		Control contents = super.createDialogArea(parent);
-		if (columns == null || columns.size() == 0) {
-			return contents;
-		}
+    @Override
+    protected Control createDialogArea(Composite parent) {
+        Control contents = super.createDialogArea(parent);
+        if (columns == null || columns.size() == 0) {
+            return contents;
+        }
 
-		GridLayout layout = GridLayoutFactory.fillDefaults().numColumns(4).margins(10, 10).spacing(5, 5).create();
-		Composite container = new Composite(parent, SWT.NULL);
-		container.setLayout(layout);
+        GridLayout layout = GridLayoutFactory.fillDefaults().numColumns(4).margins(10, 10).spacing(5, 5).create();
+        Composite container = new Composite(parent, SWT.NULL);
+        container.setLayout(layout);
 
-		for (String column : columns) {
-			Composite checkContainer = new Composite(container, SWT.NULL);
-			BooleanFieldEditor check = new BooleanFieldEditor(column, column, checkContainer);
-			this.checks.add(check);
-		}
-		return contents;
-	}
+        for (String column : columns) {
+            Composite checkContainer = new Composite(container, SWT.NULL);
+            BooleanFieldEditor check = new BooleanFieldEditor(column, column, checkContainer);
+            this.checks.add(check);
+        }
+        return contents;
+    }
 
-	@Override
-	protected void okPressed() {
-		List<String> valids = new ArrayList<String>();
-		for (BooleanFieldEditor check : checks) {
-			if (check.getBooleanValue()) {
-				String column = check.getLabelText();
-				valids.add(column);
-			}
-		}
+    @Override
+    protected void okPressed() {
+        List<String> valids = new ArrayList<String>();
+        for (BooleanFieldEditor check : checks) {
+            if (check.getBooleanValue()) {
+                String column = check.getLabelText();
+                valids.add(column);
+            }
+        }
+        switch (this.copyAs) {
+            case InsertJavaMap:
+                DataSetView.copyAsJavaMap(valids, true);
+                break;
+            case CheckJavaMap:
+                DataSetView.copyAsJavaMap(valids, false);
+                break;
+            default:
+                DataSetView.copyAsJson(valids);
+        }
+        super.okPressed();
+    }
 
-		DataSetView.copyAsJavaMap(valids, isInsert);
-		super.okPressed();
-	}
+    public static enum CopyAs {
+        InsertJavaMap,
+
+        CheckJavaMap,
+
+        Json;
+    }
 }

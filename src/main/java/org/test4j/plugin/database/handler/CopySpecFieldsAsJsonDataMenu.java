@@ -6,6 +6,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.ui.IViewSite;
 import org.test4j.plugin.database.ui.DataSetView;
 import org.test4j.plugin.database.ui.wizard.SelectColumnsDialog;
+import org.test4j.plugin.database.ui.wizard.SelectColumnsDialog.CopyAs;
 import org.test4j.plugin.handler.BaseMenuItem;
 import org.test4j.plugin.resources.IconResources;
 import org.test4j.plugin.resources.PluginMessages;
@@ -27,7 +28,7 @@ public class CopySpecFieldsAsJsonDataMenu extends BaseMenuItem {
         if (columns == null || columns.size() == 0) {
             return;
         }
-        SelectColumnsDialog dialog = new SelectColumnsDialog(this.workbenchPartSite.getShell(), columns, true);
+        SelectColumnsDialog dialog = new SelectColumnsDialog(this.workbenchPartSite.getShell(), columns, CopyAs.Json);
         dialog.open();
     }
 
@@ -38,7 +39,7 @@ public class CopySpecFieldsAsJsonDataMenu extends BaseMenuItem {
 
     @Override
     protected String getMenuIcon() {
-        return IconResources.COPY_INSERT_DATA;
+        return IconResources.COPY_JSON_DATA;
     }
 
 }
