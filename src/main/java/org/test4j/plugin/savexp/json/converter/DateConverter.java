@@ -1,4 +1,4 @@
-package org.test4j.plugin.savexp.xstream.converter;
+package org.test4j.plugin.savexp.json.converter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,7 +8,7 @@ import java.util.Set;
 import org.eclipse.debug.core.model.IVariable;
 import org.eclipse.jdt.debug.core.IJavaPrimitiveValue;
 import org.eclipse.jdt.debug.core.IJavaValue;
-import org.test4j.plugin.savexp.xstream.AbstractJsonConverter;
+import org.test4j.plugin.savexp.json.AbstractJsonConverter;
 
 public class DateConverter extends AbstractJsonConverter {
     static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

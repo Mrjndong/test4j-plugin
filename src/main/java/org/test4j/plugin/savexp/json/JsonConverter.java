@@ -1,4 +1,4 @@
-package org.test4j.plugin.savexp.xstream;
+package org.test4j.plugin.savexp.json;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.test4j.plugin.savexp.xstream.converter;
+package org.test4j.plugin.savexp.json.converter;
 
 import java.net.URL;
 import java.util.Currency;
@@ -9,7 +9,7 @@ import java.util.UUID;
 
 import org.eclipse.jdt.debug.core.IJavaValue;
 import org.test4j.plugin.savexp.assistor.JdtClazzUtil;
-import org.test4j.plugin.savexp.xstream.AbstractJsonConverter;
+import org.test4j.plugin.savexp.json.AbstractJsonConverter;
 
 public class StringConverter extends AbstractJsonConverter {
 

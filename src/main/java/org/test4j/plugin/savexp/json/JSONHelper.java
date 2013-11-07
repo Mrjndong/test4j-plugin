@@ -1,4 +1,4 @@
-package org.test4j.plugin.savexp.xstream;
+package org.test4j.plugin.savexp.json;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,17 +7,17 @@ import org.eclipse.debug.core.DebugException;
 import org.eclipse.jdt.debug.core.IJavaClassType;
 import org.eclipse.jdt.debug.core.IJavaInterfaceType;
 import org.eclipse.jdt.debug.core.IJavaValue;
-import org.test4j.plugin.savexp.xstream.converter.ArrayConverter;
-import org.test4j.plugin.savexp.xstream.converter.CharsetConverter;
-import org.test4j.plugin.savexp.xstream.converter.CollectionConverter;
-import org.test4j.plugin.savexp.xstream.converter.DateConverter;
-import org.test4j.plugin.savexp.xstream.converter.EnumConverter;
-import org.test4j.plugin.savexp.xstream.converter.FileConverter;
-import org.test4j.plugin.savexp.xstream.converter.JavaClassConverter;
-import org.test4j.plugin.savexp.xstream.converter.MapConverter;
-import org.test4j.plugin.savexp.xstream.converter.NumberConverter;
-import org.test4j.plugin.savexp.xstream.converter.PoJoConverter;
-import org.test4j.plugin.savexp.xstream.converter.StringConverter;
+import org.test4j.plugin.savexp.json.converter.ArrayConverter;
+import org.test4j.plugin.savexp.json.converter.CharsetConverter;
+import org.test4j.plugin.savexp.json.converter.CollectionConverter;
+import org.test4j.plugin.savexp.json.converter.DateConverter;
+import org.test4j.plugin.savexp.json.converter.EnumConverter;
+import org.test4j.plugin.savexp.json.converter.FileConverter;
+import org.test4j.plugin.savexp.json.converter.JavaClassConverter;
+import org.test4j.plugin.savexp.json.converter.MapConverter;
+import org.test4j.plugin.savexp.json.converter.NumberConverter;
+import org.test4j.plugin.savexp.json.converter.PoJoConverter;
+import org.test4j.plugin.savexp.json.converter.StringConverter;
 
 public class JSONHelper {
     final static List<JsonConverter> converts = new ArrayList<JsonConverter>();

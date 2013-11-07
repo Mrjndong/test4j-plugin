@@ -16,7 +16,7 @@ import org.eclipse.jdt.debug.core.IJavaObject;
 import org.eclipse.jdt.debug.core.IJavaStackFrame;
 import org.test4j.plugin.helper.PluginLogger;
 import org.test4j.plugin.resources.ResourceHelper;
-import org.test4j.plugin.savexp.xstream.JSONHelper;
+import org.test4j.plugin.savexp.json.JSONHelper;
 
 public class SaveExpHelper {
     private final static SimpleDateFormat dateFormat                 = new SimpleDateFormat("yyMMdd HHmmss.SSS");

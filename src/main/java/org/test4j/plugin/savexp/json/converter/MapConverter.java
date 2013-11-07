@@ -1,4 +1,4 @@
-package org.test4j.plugin.savexp.xstream.converter;
+package org.test4j.plugin.savexp.json.converter;
 
 import java.util.AbstractMap;
 import java.util.HashMap;
@@ -10,8 +10,8 @@ import java.util.Set;
 
 import org.eclipse.jdt.debug.core.IJavaValue;
 import org.test4j.plugin.savexp.assistor.SetMapClazzUtil;
-import org.test4j.plugin.savexp.xstream.AbstractJsonConverter;
-import org.test4j.plugin.savexp.xstream.JSONHelper;
+import org.test4j.plugin.savexp.json.AbstractJsonConverter;
+import org.test4j.plugin.savexp.json.JSONHelper;
 
 public class MapConverter extends AbstractJsonConverter {
 

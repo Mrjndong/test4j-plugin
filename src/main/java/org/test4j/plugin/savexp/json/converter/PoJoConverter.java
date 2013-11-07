@@ -1,12 +1,12 @@
-package org.test4j.plugin.savexp.xstream.converter;
+package org.test4j.plugin.savexp.json.converter;
 
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.debug.core.model.IVariable;
 import org.eclipse.jdt.debug.core.IJavaValue;
-import org.test4j.plugin.savexp.xstream.AbstractJsonConverter;
-import org.test4j.plugin.savexp.xstream.JSONHelper;
+import org.test4j.plugin.savexp.json.AbstractJsonConverter;
+import org.test4j.plugin.savexp.json.JSONHelper;
 
 public class PoJoConverter extends AbstractJsonConverter {
 
