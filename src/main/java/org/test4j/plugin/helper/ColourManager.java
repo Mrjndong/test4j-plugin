@@ -46,7 +46,7 @@ public final class ColourManager {
 			/**
 			 * Given When Then 蓝色
 			 */
-			put(JSpecDocumentProvider.GWZ_TAG, new RGB(0, 0, 255));
+			put(JSpecDocumentProvider.GWZ_TAG, new RGB(25, 25, 112));
 			/**
 			 * Story 孔雀蓝
 			 */
