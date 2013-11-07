@@ -1,4 +1,4 @@
-package org.test4j.plugin.savexp.xstream.converter.collections;
+package org.test4j.plugin.savexp.xstream.converter.base;
 
 import java.util.AbstractMap;
 import java.util.HashMap;
