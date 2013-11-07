@@ -3,7 +3,7 @@ package org.test4j.plugin.savexp.xstream.converter;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.jdt.debug.core.IJavaType;
 import org.eclipse.jdt.debug.core.IJavaValue;
-import org.test4j.plugin.savexp.xstream.ExXStream;
+import org.test4j.plugin.savexp.xstream.JSONHelper;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.ConversionException;
@@ -13,10 +13,10 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 public class ExSelfStreamingInstanceChecker implements ExConverter {
-	private final ExXStream self;
+	private final JSONHelper self;
 	private ExConverter defaultConverter;
 
-	public ExSelfStreamingInstanceChecker(ExConverter defaultConverter, ExXStream xstream) {
+	public ExSelfStreamingInstanceChecker(ExConverter defaultConverter, JSONHelper xstream) {
 		this.defaultConverter = defaultConverter;
 		this.self = xstream;
 	}
@@ -48,7 +48,7 @@ public class ExSelfStreamingInstanceChecker implements ExConverter {
 	public boolean canConvert(IJavaType type) {
 		try {
 			String clazname = type.getName();
-			return clazname.equals(ExXStream.class.getName()) || clazname.equals(XStream.class.getName());
+			return clazname.equals(JSONHelper.class.getName()) || clazname.equals(XStream.class.getName());
 		} catch (DebugException e) {
 			throw new RuntimeException(e);
 		}
