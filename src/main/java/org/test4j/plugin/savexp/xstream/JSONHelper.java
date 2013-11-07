@@ -1,9 +1,5 @@
 package org.test4j.plugin.savexp.xstream;
 
-import java.io.File;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,15 +8,16 @@ import org.eclipse.jdt.debug.core.IJavaClassType;
 import org.eclipse.jdt.debug.core.IJavaInterfaceType;
 import org.eclipse.jdt.debug.core.IJavaValue;
 import org.test4j.plugin.savexp.xstream.converter.JsonConverter;
+import org.test4j.plugin.savexp.xstream.converter.base.NumberConverter;
+import org.test4j.plugin.savexp.xstream.converter.base.StringConverter;
 import org.test4j.plugin.savexp.xstream.converter.collections.MapConverter;
 
-import com.thoughtworks.xstream.mapper.Mapper;
-
-@SuppressWarnings("rawtypes")
 public class JSONHelper {
     final static List<JsonConverter> converts = new ArrayList<JsonConverter>();
 
     static {
+        converts.add(new StringConverter());
+        converts.add(new NumberConverter());
         converts.add(new MapConverter());
     }
 
@@ -34,40 +31,7 @@ public class JSONHelper {
         return null;
     }
 
-    public JSONHelper() {
-    }
-
-    protected void setupImmutableTypes() {
-        // primitives are always immutable
-        addImmutableType(boolean.class);
-        addImmutableType(Boolean.class);
-        addImmutableType(byte.class);
-        addImmutableType(Byte.class);
-        addImmutableType(char.class);
-        addImmutableType(Character.class);
-        addImmutableType(double.class);
-        addImmutableType(Double.class);
-        addImmutableType(float.class);
-        addImmutableType(Float.class);
-        addImmutableType(int.class);
-        addImmutableType(Integer.class);
-        addImmutableType(long.class);
-        addImmutableType(Long.class);
-        addImmutableType(short.class);
-        addImmutableType(Short.class);
-
-        // additional types
-        addImmutableType(Mapper.Null.class);
-        addImmutableType(BigDecimal.class);
-        addImmutableType(BigInteger.class);
-        addImmutableType(String.class);
-        addImmutableType(URL.class);
-        addImmutableType(File.class);
-        addImmutableType(Class.class);
-    }
-
-    private void addImmutableType(Class class1) {
-        // TODO Auto-generated method stub
+    private JSONHelper() {
     }
 
     public static String toJSON(IJavaValue obj) throws Exception {

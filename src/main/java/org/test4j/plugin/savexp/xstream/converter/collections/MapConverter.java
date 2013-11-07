@@ -1,23 +1,17 @@
 package org.test4j.plugin.savexp.xstream.converter.collections;
 
-import java.util.List;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
-import org.eclipse.debug.core.DebugException;
 import org.eclipse.jdt.debug.core.IJavaValue;
 import org.test4j.plugin.savexp.assistor.SetMapClazzUtil;
 import org.test4j.plugin.savexp.xstream.JSONHelper;
-import org.test4j.plugin.savexp.xstream.converter.JsonConverter;
+import org.test4j.plugin.savexp.xstream.converter.AbstractJsonConverter;
 
-import com.thoughtworks.xstream.converters.MarshallingContext;
-import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-
-public class MapConverter implements JsonConverter {
-
-    public void marshal(IJavaValue source, HierarchicalStreamWriter writer, MarshallingContext context)
-            throws DebugException {
-        CollectionConverterHelper.marshalMap(null, source, writer, context);
-    }
+public class MapConverter extends AbstractJsonConverter {
 
     public String convert(IJavaValue input) throws Exception {
         StringBuilder buff = new StringBuilder("{");
@@ -35,17 +29,20 @@ public class MapConverter implements JsonConverter {
             } else {
                 buff.append(",");
             }
-            buff.append("\"").append(keyStr).append("\"").append(":").append("\"").append(valueStr).append("\"");
+            buff.append(keyStr).append(":").append(valueStr);
         }
         return buff.append("}").toString();
     }
 
-    public boolean accept(List<String> types) {
-        for (String type : types) {
-            if (Map.class.getName().equals(type)) {
-                return true;
-            }
-        }
-        return false;
+    static Set<String> types = new HashSet<String>();
+    static {
+        types.add(Map.class.getName());
+        types.add(AbstractMap.class.getName());
+        types.add(HashMap.class.getName());
+    }
+
+    @Override
+    protected Set<String> getIdentifyType() {
+        return types;
     }
 }
