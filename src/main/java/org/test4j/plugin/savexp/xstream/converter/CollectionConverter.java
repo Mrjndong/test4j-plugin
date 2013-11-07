@@ -1,4 +1,4 @@
-package org.test4j.plugin.savexp.xstream.converter.base;
+package org.test4j.plugin.savexp.xstream.converter;
 
 import java.util.AbstractCollection;
 import java.util.ArrayList;
@@ -9,8 +9,8 @@ import java.util.Set;
 
 import org.eclipse.jdt.debug.core.IJavaValue;
 import org.test4j.plugin.savexp.assistor.SetMapClazzUtil;
+import org.test4j.plugin.savexp.xstream.AbstractJsonConverter;
 import org.test4j.plugin.savexp.xstream.JSONHelper;
-import org.test4j.plugin.savexp.xstream.converter.AbstractJsonConverter;
 
 public class CollectionConverter extends AbstractJsonConverter {
 

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.eclipse.debug.core.model.IVariable;
 import org.eclipse.jdt.debug.core.IJavaValue;
+import org.test4j.plugin.savexp.xstream.AbstractJsonConverter;
 import org.test4j.plugin.savexp.xstream.JSONHelper;
 
 public class PoJoConverter extends AbstractJsonConverter {

@@ -7,18 +7,17 @@ import org.eclipse.debug.core.DebugException;
 import org.eclipse.jdt.debug.core.IJavaClassType;
 import org.eclipse.jdt.debug.core.IJavaInterfaceType;
 import org.eclipse.jdt.debug.core.IJavaValue;
-import org.test4j.plugin.savexp.xstream.converter.JsonConverter;
+import org.test4j.plugin.savexp.xstream.converter.ArrayConverter;
+import org.test4j.plugin.savexp.xstream.converter.CharsetConverter;
+import org.test4j.plugin.savexp.xstream.converter.CollectionConverter;
+import org.test4j.plugin.savexp.xstream.converter.DateConverter;
+import org.test4j.plugin.savexp.xstream.converter.EnumConverter;
+import org.test4j.plugin.savexp.xstream.converter.FileConverter;
+import org.test4j.plugin.savexp.xstream.converter.JavaClassConverter;
+import org.test4j.plugin.savexp.xstream.converter.MapConverter;
+import org.test4j.plugin.savexp.xstream.converter.NumberConverter;
 import org.test4j.plugin.savexp.xstream.converter.PoJoConverter;
-import org.test4j.plugin.savexp.xstream.converter.base.ArrayConverter;
-import org.test4j.plugin.savexp.xstream.converter.base.CharsetConverter;
-import org.test4j.plugin.savexp.xstream.converter.base.CollectionConverter;
-import org.test4j.plugin.savexp.xstream.converter.base.DateConverter;
-import org.test4j.plugin.savexp.xstream.converter.base.EnumConverter;
-import org.test4j.plugin.savexp.xstream.converter.base.FileConverter;
-import org.test4j.plugin.savexp.xstream.converter.base.JavaClassConverter;
-import org.test4j.plugin.savexp.xstream.converter.base.MapConverter;
-import org.test4j.plugin.savexp.xstream.converter.base.NumberConverter;
-import org.test4j.plugin.savexp.xstream.converter.base.StringConverter;
+import org.test4j.plugin.savexp.xstream.converter.StringConverter;
 
 public class JSONHelper {
     final static List<JsonConverter> converts = new ArrayList<JsonConverter>();

@@ -1,4 +1,4 @@
-package org.test4j.plugin.savexp.xstream.converter;
+package org.test4j.plugin.savexp.xstream;
 
 import java.util.List;
 import java.util.Set;

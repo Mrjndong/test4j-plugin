@@ -1,4 +1,4 @@
-package org.test4j.plugin.savexp.xstream.converter.base;
+package org.test4j.plugin.savexp.xstream.converter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.eclipse.jdt.debug.core.IJavaValue;
 import org.test4j.plugin.savexp.assistor.JdtClazzUtil;
-import org.test4j.plugin.savexp.xstream.converter.AbstractJsonConverter;
+import org.test4j.plugin.savexp.xstream.AbstractJsonConverter;
 
 public class NumberConverter extends AbstractJsonConverter {
 

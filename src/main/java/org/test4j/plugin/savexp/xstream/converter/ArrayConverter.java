@@ -1,12 +1,12 @@
-package org.test4j.plugin.savexp.xstream.converter.base;
+package org.test4j.plugin.savexp.xstream.converter;
 
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jdt.debug.core.IJavaArray;
 import org.eclipse.jdt.debug.core.IJavaValue;
+import org.test4j.plugin.savexp.xstream.AbstractJsonConverter;
 import org.test4j.plugin.savexp.xstream.JSONHelper;
-import org.test4j.plugin.savexp.xstream.converter.AbstractJsonConverter;
 
 public class ArrayConverter extends AbstractJsonConverter {
     public String convert(IJavaValue input) throws Exception {
