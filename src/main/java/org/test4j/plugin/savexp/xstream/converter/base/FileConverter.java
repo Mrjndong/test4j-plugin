@@ -8,7 +8,7 @@ import org.eclipse.jdt.debug.core.IJavaValue;
 import org.test4j.plugin.savexp.assistor.JdtClazzUtil;
 import org.test4j.plugin.savexp.xstream.converter.AbstractJsonConverter;
 
-public class ExFileConverter extends AbstractJsonConverter {
+public class FileConverter extends AbstractJsonConverter {
 
     public String convert(IJavaValue input) throws Exception {
         String path = JdtClazzUtil.callNoneParaReturnStringMethod(input, "getPath");
