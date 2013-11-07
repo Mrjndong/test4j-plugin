@@ -14,6 +14,7 @@ import org.test4j.plugin.savexp.xstream.converter.base.FileConverter;
 import org.test4j.plugin.savexp.xstream.converter.base.JavaClassConverter;
 import org.test4j.plugin.savexp.xstream.converter.base.NumberConverter;
 import org.test4j.plugin.savexp.xstream.converter.base.StringConverter;
+import org.test4j.plugin.savexp.xstream.converter.collections.ArrayConverter;
 import org.test4j.plugin.savexp.xstream.converter.collections.MapConverter;
 
 public class JSONHelper {
@@ -28,12 +29,13 @@ public class JSONHelper {
         converts.add(new CharsetConverter());
         converts.add(new JavaClassConverter());
         converts.add(new MapConverter());
+        converts.add(new ArrayConverter());
     }
 
     public static JsonConverter getJsonConverter(IJavaValue obj) throws Exception {
         List<String> types = getJavaTypes(obj);
         for (JsonConverter converter : converts) {
-            if (converter.accept(types)) {
+            if (converter.accept(obj, types)) {
                 return converter;
             }
         }

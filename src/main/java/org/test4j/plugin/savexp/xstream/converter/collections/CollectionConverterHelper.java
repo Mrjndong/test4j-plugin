@@ -12,20 +12,6 @@ import com.thoughtworks.xstream.io.ExtendedHierarchicalStreamWriterHelper;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 public class CollectionConverterHelper {
-    public static void writeItem(ExMapper mapper, IJavaValue item, MarshallingContext context,
-                                 HierarchicalStreamWriter writer) throws DebugException {
-        if (item.getValueString().equals("null")) {
-            String name = mapper.serializedClass((Class<?>) null);
-            writer.startNode(name);
-            writer.endNode();
-        } else {
-            Class<?> clazz = JdtClazzUtil.getClazz(item);
-            String name = mapper.serializedClass(item.getJavaType());
-            ExtendedHierarchicalStreamWriterHelper.startNode(writer, name, clazz);
-            context.convertAnother(item);
-            writer.endNode();
-        }
-    }
 
     public static void writeTreeComparator(IValue comparator, ExMapper mapper, HierarchicalStreamWriter writer,
                                            MarshallingContext context) {
@@ -46,7 +32,7 @@ public class CollectionConverterHelper {
 
         while (SetMapClazzUtil.hasNext(iterator)) {
             IJavaValue item = SetMapClazzUtil.next(iterator);
-            CollectionConverterHelper.writeItem(mapper, item, context, writer);
+            // CollectionConverterHelper.writeItem(mapper, item, context, writer);
         }
     }
 }
