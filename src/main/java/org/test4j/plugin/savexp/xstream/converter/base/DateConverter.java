@@ -19,7 +19,7 @@ public class DateConverter extends AbstractJsonConverter {
         Date date = new Date();
         date.setTime(value.getLongValue());
         String dateStr = df.format(date);
-        return "\"" + dateStr + "\"";
+        return super.encode(dateStr);
     }
 
     static Set<String> types = new HashSet<String>();

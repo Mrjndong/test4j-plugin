@@ -14,7 +14,8 @@ import org.test4j.plugin.savexp.xstream.converter.AbstractJsonConverter;
 public class StringConverter extends AbstractJsonConverter {
 
     public String convert(IJavaValue input) throws Exception {
-        return "\"" + JdtClazzUtil.getValueString(input) + "\"";
+        String value = JdtClazzUtil.getValueString(input);
+        return super.encode(value);
     }
 
     static Set<String> types = new HashSet<String>();
