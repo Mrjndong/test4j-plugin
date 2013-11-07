@@ -57,14 +57,6 @@
 			name="Define Mock Method" categoryId="org.test4j.plugin.commands"
 			description="to generate Mockit.MockUP method.">
 		</command>
-		<command id="testsequence.open.handler" description="to open runned sequence of test method."
-			defaultHandler="org.test4j.plugin.testsequence.handler.TestSequenceOpenHandler"
-			name="Open Test Sequence" categoryId="org.test4j.plugin.commands">
-		</command>
-		<command id="testsequence.compare.handler" description="to compare two sequence of test method."
-			defaultHandler="org.test4j.plugin.testsequence.handler.TestSequenceCompareHandler"
-			name="Compare Test Sequence" categoryId="org.test4j.plugin.commands">
-		</command>
 		
 		<command id="org.test4j.plugin.jspec.handler.MarkCollapsedHandler" description="collapse folder."
 			defaultHandler="org.test4j.plugin.jspec.handler.MarkCollapsedHandler"
@@ -135,8 +127,6 @@
 				<separator name="top" />
 				<command commandId="org.test4j.plugin.definemock.handler.DefineMockMethodHandler"
 					label="New MockUp Method" icon="icons/mock_method_add.png" />
-				<command commandId="testsequence.open.handler" label="Open Test Sequence" icon="icons/test_sequence_open.png" />
-				<command commandId="testsequence.compare.handler" label="Compare Test Sequence" icon="icons/test_sequence_compare.png" />
 				<separator name="group2" />
 			</menu>
 		</menuContribution>
@@ -151,8 +141,6 @@
 			name="Results" category="org.test4j.plugin.views" icon="icons/table_icon.gif" />
 		<view id="org.test4j.plugin.database.ui.MessageView" class="org.test4j.plugin.database.ui.MessageView"
 			name="Messages" category="org.test4j.plugin.views" icon="icons/column_icon.gif" />
-		<view id="org.test4j.plugin.testsequence.ui.CompareBrowser" class="org.test4j.plugin.testsequence.ui.CompareBrowser"
-			name="CompareSequence" category="org.test4j.plugin.views" icon="icons/column_icon.gif" />
 	</extension>
 
 	<!--SQL Editor -->
