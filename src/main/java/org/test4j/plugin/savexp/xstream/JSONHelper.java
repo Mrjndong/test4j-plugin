@@ -8,6 +8,7 @@ import org.eclipse.jdt.debug.core.IJavaClassType;
 import org.eclipse.jdt.debug.core.IJavaInterfaceType;
 import org.eclipse.jdt.debug.core.IJavaValue;
 import org.test4j.plugin.savexp.xstream.converter.JsonConverter;
+import org.test4j.plugin.savexp.xstream.converter.PoJoConverter;
 import org.test4j.plugin.savexp.xstream.converter.base.ArrayConverter;
 import org.test4j.plugin.savexp.xstream.converter.base.CharsetConverter;
 import org.test4j.plugin.savexp.xstream.converter.base.CollectionConverter;
@@ -34,6 +35,8 @@ public class JSONHelper {
         converts.add(new MapConverter());
         converts.add(new ArrayConverter());
         converts.add(new CollectionConverter());
+
+        converts.add(new PoJoConverter());
     }
 
     public static JsonConverter getJsonConverter(IJavaValue obj) throws Exception {

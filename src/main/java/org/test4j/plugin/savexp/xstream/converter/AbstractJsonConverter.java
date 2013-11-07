@@ -19,7 +19,7 @@ public abstract class AbstractJsonConverter implements JsonConverter {
 
     protected abstract Set<String> getIdentifyType();
 
-    public String encode(String path) {
+    public static String encode(String path) {
         return String.format("\"%s\"", path);
     }
 }
